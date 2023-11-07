@@ -7,3 +7,4 @@ public class User {
         this.fields = fields;
     }
 }
+

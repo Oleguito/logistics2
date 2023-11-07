@@ -2,11 +2,10 @@ package service;
 
 
 import entities.User;
-import entities.UserFields;
 
 import java.util.Scanner;
 
-public class Service {
+public class MainService {
     
     static Scanner scanner = new Scanner(System.in);
     
@@ -23,11 +22,12 @@ public class Service {
         return password;
     }
     
-    public static User addUser(){
+    public static void addUser(){
         String FIO = getFIO();
         String login = getLogin();
         String password = getPassword();
-        return new User(new UserFields(FIO, login, password, 0));
+        // return new User(FIO, login, password, 0);
+        // return;
     }
     
     private static String getLogin() {

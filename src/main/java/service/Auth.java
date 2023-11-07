@@ -1,4 +1,4 @@
-package entities;
+package service;
 
 public class Auth {
 

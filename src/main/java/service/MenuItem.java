@@ -1,4 +1,4 @@
-package entities;
+package service;
 
 import enums.MenuTitle;
 import interfaces.MenuAction;

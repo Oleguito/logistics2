@@ -1,10 +1,13 @@
 import entities.User;
-import interfaces.ServiceInterface;
-import service.Service;
+// import interfaces.ServiceInterface;
+import org.apache.commons.codec.digest.HmacAlgorithms;
+import org.apache.commons.codec.digest.HmacUtils;
+import service.MainService;
+import database.DataBase;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
-import java.util.Scanner;
+
+// import static database.DataBase.createTable;
 
 class O {
     int field;
@@ -13,39 +16,38 @@ class O {
     O(String a) {this.field = a.length();}
 }
 
-class ServiceInterfaceClass implements ServiceInterface {
-    @Override
-    public User addUser() {
-        return Service.addUser();
-    }
-}
-
 public class Main {
     
     
     
     public static void main(String[] args) {
      
-        ServiceInterface si = () -> { return Service.addUser(); };
+        // ServiceInterface si = () -> { return MainService.addUser(); };
+        //
+        // User user = si.addUser();
         
-        User user = si.addUser();
+        String hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, "key").hmacHex("data");
+        String hmac1 = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, "key").hmacHex("data");
+        System.out.println(hmac);System.out.println(hmac1);
+    
         
-        ArrayList <User> users = new ArrayList<>();
+        DataBase.createTable("kjshdfklsjdf", new String[] {"sdfsdf", "sdfsdf", "sdfsdf"});
         
-        
-        
-        
-        // "skdjhfks435b34j5g3b5j3g53fg6h4j5" 32 / 64 / ....
-        String sdf = "skjdfhskdhjf";
-        
-        Integer b = new Integer(3);
-        
-        int[] ints;
-        ints = new int[54];
-        
-        byte x = 1;
-        char c = 'A'; // 65
-        long l = Long.MAX_VALUE;
+        // ArrayList <User> users = new ArrayList<>();
+        //
+        //
+        //
+        // // "skdjhfks435b34j5g3b5j3g53fg6h4j5" 32 / 64 / ....
+        // String sdf = "skjdfhskdhjf";
+        //
+        // Integer b = new Integer(3);
+        //
+        // int[] ints;
+        // ints = new int[54];
+        //
+        // byte x = 1;
+        // char c = 'A'; // 65
+        // long l = Long.MAX_VALUE;
         // System.out.println(l);
         
         

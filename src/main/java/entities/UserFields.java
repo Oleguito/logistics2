@@ -1,8 +1,12 @@
 package entities;
 
-public record UserFields(
-    String fullName,
-    String login,
-    String password,
-    int age
-) {}
+import java.util.UUID;
+
+public class UserFields {
+    private UUID uuid;
+    private String fullName;
+    private String login;
+    private String password;
+    private int age;
+    // TODO Создать конструктор AllArgs
+}

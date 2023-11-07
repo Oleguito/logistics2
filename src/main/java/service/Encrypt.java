@@ -1,4 +1,4 @@
-package entities;
+package service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -22,7 +22,7 @@ public class Encrypt {
         try {
             fr = new FileReader(filename);
             br = new BufferedReader(fr);
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 contents += line + "\n";
             }
             fr.close();
