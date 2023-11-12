@@ -1,24 +1,19 @@
 import entities.User;
 // import interfaces.ServiceInterface;
+import entities.UserFields;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import service.MainService;
 import database.DataBase;
+import service.Menu;
+import settings.Settings;
+import utils.FileUtils;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-// import static database.DataBase.createTable;
-
-class O {
-    int field;
-    
-    O(int a) {this.field = -a;}
-    O(String a) {this.field = a.length();}
-}
 
 public class Main {
-    
-    
     
     public static void main(String[] args) {
      
@@ -28,12 +23,14 @@ public class Main {
         
         String hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, "key").hmacHex("data");
         String hmac1 = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, "key").hmacHex("data");
-        System.out.println(hmac);System.out.println(hmac1);
+        // System.out.println(hmac);System.out.println(hmac1);
     
         
-        DataBase.createTable("kjshdfklsjdf", new String[] {"sdfsdf", "sdfsdf", "sdfsdf"});
+        // DataBase.getUsersFromDB();
         
-        // ArrayList <User> users = new ArrayList<>();
+        // DataBase.createTable("kjshdfklsjdf", new String[] {"sdfsdf", "sdfsdf", "sdfsdf"});
+        
+        // ArrayList <User> users.db = new ArrayList<>();
         //
         //
         //
@@ -63,6 +60,12 @@ public class Main {
         // O.static_func();
         
         // Menu.run();
+        
+        
+        // FileUtils.writeFile("src/main/resources/users.db", sb.toString());
+        
+        // DataBase.getUsers();
+        
         // System.out.println(Encrypt.encryptString("Boo"));
         // Encrypt.writeFile("sfddf.txt","sldkfjsdl;kf");
         // Encrypt.decryptFile("filename.txt");

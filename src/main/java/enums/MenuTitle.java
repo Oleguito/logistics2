@@ -21,7 +21,7 @@ public enum MenuTitle {
     
     BACK("Назад"),
     HOME("Домашняя страница"),
-    EXIT("Выход");
+    EXIT("Выход из программы");
     
     public String getValue() {
         return value;

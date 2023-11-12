@@ -7,7 +7,8 @@ import java.util.Stack;
 
 public class Menu {
     static Scanner scanner = new Scanner(System.in);
-
+    static UserService userService = new UserService();
+    
     public static int getChoice(int low, int high) {
         int res = 0;
         System.out.printf("Введите число от %d до %d: ", low, high);
@@ -43,8 +44,7 @@ public class Menu {
         MenuItem deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {});
         MenuItem editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {});
         MenuItem deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {});
-        MenuItem addUserMenu = new MenuItem(MenuTitle.ADD_USER, () -> {
-            MainService.addUser();});
+        MenuItem addUserMenu = new MenuItem(MenuTitle.ADD_USER, () -> {userService.addUser();});
         
         MenuItem exitMenu = new MenuItem(MenuTitle.EXIT, () -> {System.exit(0);});
         MenuItem backMenu = new MenuItem(MenuTitle.BACK, () -> {});

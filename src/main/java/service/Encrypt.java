@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static utils.FileUtils.readFile;
+import static utils.FileUtils.writeFile;
+
 public class Encrypt {
     public static void encryptFile(String filename) {
         writeFile(filename, encryptString(readFile(filename)));
@@ -14,35 +17,6 @@ public class Encrypt {
         writeFile(filename, decryptString(readFile(filename)));
     }
     
-    public static String readFile(String filename) {
-        String contents = "";
-        String line;
-        FileReader fr;
-        BufferedReader br;
-        try {
-            fr = new FileReader(filename);
-            br = new BufferedReader(fr);
-            while ((line = br.readLine()) != null) {
-                contents += line + "\n";
-            }
-            fr.close();
-        } catch (IOException e) {
-            throw new RuntimeException("Файл не существует либо ошибка чтения", e);
-        }
-        return contents;
-    }
-    
-   
-    public static void writeFile (String filename, String text) {
-        FileWriter writer;
-        try {
-            writer = new FileWriter("filename.txt");
-            writer.write(text);
-            writer.close();
-        } catch (Exception e) {
-            e.getMessage();
-        }
-    }
 
     private static String decryptString(String string) {
         char[] contentsArray = string.toCharArray();
