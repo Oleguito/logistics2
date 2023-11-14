@@ -1,5 +1,8 @@
 package service;
 
+import org.apache.commons.codec.digest.HmacAlgorithms;
+import org.apache.commons.codec.digest.HmacUtils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -45,4 +48,7 @@ public class Encrypt {
     }
     
     
+    public static String getHMACof(String key, String data) {
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(data).toString();
+    }
 }

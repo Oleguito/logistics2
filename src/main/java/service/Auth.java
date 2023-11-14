@@ -1,26 +1,35 @@
 package service;
 
-import database.DataBase;
-import entities.User;
-import org.apache.commons.codec.digest.HmacAlgorithms;
-import org.apache.commons.codec.digest.HmacUtils;
+import application.COP;
+import service.menu.Menu;
 import settings.Settings;
 
 public class Auth {
-    public static void authorize(User user) {
-        String login = UserService.getLogin();
-        String password = UserService.getPassword();
-        String passwordHash = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, Settings.userSecret)
-                .hmacHex(password);
-        var foundUser = DataBase.getUsers().parallelStream()
-                .filter(u -> {
-                    return u.getFields().getLogin().equals(login) &&
-                            u.getFields().getPasswordHash().equals(passwordHash);
-                })
-                .findFirst();
-        if(foundUser.isEmpty()) {
-            System.out.println("Увы, не получилось");
-        }
+    public static void authorize() {
+        // String login = COP.us.getLogin();
+        // String password = COP.us.getPassword();
+        // String passwordHash = Encrypt.getHMACof(Settings.userSecret, password);
+        //
+        // var foundUser = COP.db.getUsers().parallelStream()
+        //         .filter(u -> {
+        //             return u.getFields().getLogin().equals(login) &&
+        //                     u.getFields().getPasswordHash().equals(passwordHash);
+        //         })
+        //         .findFirst();
+        // if(foundUser.isEmpty()) {
+        //     System.out.println("Увы, не получилось! Бывает :(");
+        //     return;
+        // }
+        // /* Гостя тут не будет потому что файл users.db будет зашифрован
+        //    поэтому просто устанавливаем текущего пользователя */
+        // COP.us.setAuthorizedUser(foundUser.get());
+        ///* Нужно сказать меню сервису что юзер установлен, чтобы тот поменял меню */
+        // Menu.replaceMenu(Menu.profileMenu, Menu.enteredProfileMenu);
+        // Menu.setProfileMenuEntered();
         
+        COP.us.setAuthorizedUser(COP.db.getUsers().get(0));
+        System.out.println("Поздравляем! Вы успешно авторизовались!");
+        System.out.println("Ваше имя-отчество: " + COP.us.getAuthorizedUser().getFields().getFullName());
+        System.out.println("Ваш логин: " + COP.us.getAuthorizedUser().getFields().getLogin());
     }
 }

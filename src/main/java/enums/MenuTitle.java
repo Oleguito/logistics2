@@ -4,6 +4,8 @@ public enum MenuTitle {
     
     MAIN("Главное меню"),
         PROFILE("Профиль"),
+        NON_ENTERED_PROFILE("Невойденный Профиль"),
+        ENTERED_PROFILE("Войденнный Профиль"),
             SIGN_IN("Войти"),
                 EDIT_ACCOUNT("Изменить учетную запись"),
                 DELETE_ACCOUNT("Удалить учетную запись"),
@@ -16,7 +18,8 @@ public enum MenuTitle {
                         DELETE_ENTRY("Удалить запись"),
                     EDIT_CARGO_PROFILE("Изменить профиль груза"),
                     DELETE_CARGO_PROFILE("Удалить профиль груза"),
-            ADD_USER("Добавить пользователя"),
+            ADD_USER("Добавить учетную запись пользователя"),
+            DELETE_USER("Удалить учетную запись пользователя"),
     
     
     BACK("Назад"),

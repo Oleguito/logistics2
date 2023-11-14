@@ -1,7 +1,9 @@
 package database;
 
+import entities.CargoProfile;
 import entities.User;
 import entities.UserFields;
+import enums.Role;
 import utils.FileUtils;
 
 import java.io.File;
@@ -12,15 +14,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DataBase {
+public class DataBase implements database.interfaces.DataBase {
     
-    static List<User> users = getUsersFromDB();
+    List<User> users;
+    List<CargoProfile> cargoProfiles;
     
-    public static List<User> getUsers() {
+    public DataBase() {
+        this.users = getUsersFromDB();;
+        this.cargoProfiles = getCargoProfilesFromDB();
+    }
+    
+    public List <CargoProfile> getCargoProfiles() {
+        return cargoProfiles;
+    }
+    
+    private List <CargoProfile> getCargoProfilesFromDB() {
+        return null;
+    }
+    
+    public List<User> getUsers() {
         return users;
     }
     
-    private static List <User> getUsersFromDB () {
+    private List <User> getUsersFromDB () {
         String fileContents = FileUtils.readFile("users.db");
         List<User> res = new ArrayList <>();
         String[] splitByLine = fileContents.split("\n");
@@ -35,14 +51,15 @@ public class DataBase {
                     .fullName(split[1])
                     .login(split[2])
                     .passwordHash(split[3])
-                    .age(Integer.parseInt(split[4]))
+                    .role(Role.valueOf(split[4]))
+                    .age(Integer.parseInt(split[5]))
                     .build()));
         }
         
         return res;
     }
     
-    public static void createTable(String title, String[] columns) {
+    public void createTable(String title, String[] columns) {
         StringBuffer contents = new StringBuffer();
         for (int i = 0; i < columns.length; i++) {
             contents.append(columns[i] + ";");

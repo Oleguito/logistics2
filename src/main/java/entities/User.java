@@ -15,11 +15,12 @@ public class User {
     }
     
     public String toDBstring () {
-        return MessageFormat.format("{0};{1};{2};{3};{4}\n",
+        return MessageFormat.format("{0};{1};{2};{3};{4};{5}\n",
                 fields.getUuid(),
                 fields.getFullName(),
                 fields.getLogin(),
                 fields.getPasswordHash(),
+                fields.getRole(),
                 fields.getAge());
     }
 }

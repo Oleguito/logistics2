@@ -1,5 +1,7 @@
 package utils;
 
+import settings.Settings;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -28,7 +30,7 @@ public class FileUtils {
     public static void writeFile (String filename, String text) {
         FileWriter writer;
         try {
-            writer = new FileWriter(filename);
+            writer = new FileWriter(Settings.filesDir + filename);
             writer.write(text);
             writer.close();
         } catch (Exception e) {
