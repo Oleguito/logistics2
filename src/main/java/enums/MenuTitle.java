@@ -7,8 +7,8 @@ public enum MenuTitle {
         NON_ENTERED_PROFILE("Невойденный Профиль"),
         ENTERED_PROFILE("Войденнный Профиль"),
             SIGN_IN("Войти"),
-                EDIT_ACCOUNT("Изменить учетную запись"),
-                DELETE_ACCOUNT("Удалить учетную запись"),
+                EDIT_ACCOUNT("Изменить мою учетную запись"),
+                DELETE_ACCOUNT("Удалить мою учетную запись"),
                 HISTORY("История доставок"),
                 CARGOS("Грузы"),
                     TRACKING("Отслеживание грузов"),
@@ -19,7 +19,7 @@ public enum MenuTitle {
                     EDIT_CARGO_PROFILE("Изменить профиль груза"),
                     DELETE_CARGO_PROFILE("Удалить профиль груза"),
             ADD_USER("Добавить учетную запись пользователя"),
-            DELETE_USER("Удалить учетную запись пользователя"),
+            DELETE_USER("Удалить учетную запись другого пользователя"),
     
     
     BACK("Назад"),

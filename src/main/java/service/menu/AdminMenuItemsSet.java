@@ -4,27 +4,44 @@ import application.COP;
 import enums.MenuTitle;
 
 public class AdminMenuItemsSet extends MenuItemsSet {
-    public static MenuItem editAccountMenu = new MenuItem(MenuTitle.EDIT_ACCOUNT, () -> {
-        COP.us.editUser();});
-    public static MenuItem deleteAccountMenu = new MenuItem(MenuTitle.DELETE_ACCOUNT, () -> {
-        COP.us.deleteUser();});
-    public static MenuItem historyMenu = new MenuItem(MenuTitle.HISTORY, () -> {});
-    public static MenuItem cargosMenu = new MenuItem(MenuTitle.CARGOS, () -> {});
-    public static MenuItem trackingMenu = new MenuItem(MenuTitle.TRACKING, () -> {});
-    public static MenuItem createCargoProfileMenu = new MenuItem(MenuTitle.CREATE_CARGO_PROFILE, () -> {});
-    public static MenuItem addEntryMenu = new MenuItem(MenuTitle.ADD_ENTRY, () -> {});
-    public static MenuItem editEntryMenu = new MenuItem(MenuTitle.EDIT_ENTRY, () -> {});
-    public static MenuItem deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {});
-    public static MenuItem editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {});
-    public static MenuItem deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {});
+
+    public MenuItem editAccountMenu          ;
+    public MenuItem deleteAccountMenu        ;
+    public MenuItem historyMenu              ;
+    public MenuItem cargosMenu               ;
+    public MenuItem trackingMenu             ;
+    public MenuItem createCargoProfileMenu   ;
+    public MenuItem addEntryMenu             ;
+    public MenuItem editEntryMenu            ;
+    public MenuItem deleteEntryMenu          ;
+    public MenuItem editCargoProfileMenu     ;
+    public MenuItem deleteCargoProfileMenu   ;
+    public MenuItem deleteUserMenu           ;
     
     public AdminMenuItemsSet() {
         super();
+        
+        editAccountMenu = new MenuItem(MenuTitle.EDIT_ACCOUNT, () -> {COP.us.editUser();});
+        deleteAccountMenu = new MenuItem(MenuTitle.DELETE_ACCOUNT, () -> {COP.us.deleteUser();});
+        historyMenu = new MenuItem(MenuTitle.HISTORY, () -> {});
+        cargosMenu = new MenuItem(MenuTitle.CARGOS, () -> {});
+        trackingMenu = new MenuItem(MenuTitle.TRACKING, () -> {});
+        createCargoProfileMenu = new MenuItem(MenuTitle.CREATE_CARGO_PROFILE, () -> {});
+        addEntryMenu = new MenuItem(MenuTitle.ADD_ENTRY, () -> {});
+        editEntryMenu = new MenuItem(MenuTitle.EDIT_ENTRY, () -> {});
+        deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {});
+        editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {});
+        deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {});
+        
+        deleteUserMenu = new MenuItem(MenuTitle.DELETE_USER, () -> {
+            System.out.println("Админ удаляет пользователя...");
+        });
         
         /* Профиль — войденный */
         profileMenu = new MenuItem(MenuTitle.PROFILE, () -> {});
         profileMenu.addSubMenu(editAccountMenu);
         profileMenu.addSubMenu(deleteAccountMenu);
+        profileMenu.addSubMenu(deleteUserMenu);
         profileMenu.addSubMenu(cargosMenu);
         profileMenu.addSubMenu(historyMenu);
         profileMenu.addSubMenu(backMenu);

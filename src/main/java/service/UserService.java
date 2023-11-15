@@ -40,13 +40,24 @@ public class UserService implements service.interfaces.UserService {
     // }
     
     public void deleteUser() {
-        System.out.println("Меню удаления вашей учетной записи");
-        User currentUser = authorizedUser;
-        var allUsers = COP.db.getUsers();
-        allUsers.remove(currentUser);
-        FileUtils.writeFile("users.db",
-                UserMapper.convertListUsersToString(allUsers));
-        System.out.println("Ваша учетная запись удалена");
+        System.out.println("""
+                Меню удаления вашей учетной записи.
+                Имейте в виду что эта операция необратима
+                Введите "y" если хотите удалить свою учетную запись
+                """);
+        
+        char decision = (char) COP.scanner.nextInt();
+        if(decision == 'y' || decision == 'Y') {
+            User currentUser = authorizedUser;
+            var allUsers = COP.db.getUsers();
+            allUsers.remove(currentUser);
+            System.out.println("Ваша учетная запись удалена");
+            FileUtils.writeFile("users.db",
+                    UserMapper.convertListUsersToString(allUsers));
+            System.out.println("Изменения сохранены");
+        } else {
+            System.out.println("Выход из подпрограммы");
+        }
     }
     
     @Override
@@ -129,5 +140,39 @@ public class UserService implements service.interfaces.UserService {
             userInput = COP.scanner.nextLine().trim();
         }
         return userInput;
+    }
+    
+    void deleteUserByLogin(String loginOfAccToDelete) {
+        
+        var foundUser = COP.db.getUsers().parallelStream()
+                .filter(u -> u.getFields().getLogin().equals(loginOfAccToDelete))
+                .findFirst();
+        if(foundUser.isEmpty()) {
+            System.out.println("Такого бандита нет в системе! Выход из операции");
+            return;
+        }
+        COP.db.getUsers().remove(foundUser.get());
+        System.out.println("Учетная запись удалена");
+        FileUtils.writeFile("users.db", UserMapper.convertListUsersToString(COP.db.getUsers()));
+        System.out.println("Изменения сохранены");
+    }
+    
+    public void deleteOtherUser () {
+        System.out.println("""
+                Меню удаления учетной записи другого пользователя.
+                Имейте в виду, что эта операция необратима
+                и вам придется иметь дело с последствиями
+                Введите в следующей строке логин пользователя,
+                чью учетную запись вы желаете удалить
+                или пустую строку для отмены
+                """);
+        String login = COP.scanner.nextLine();
+        if(login.isBlank() || login.isEmpty()) {
+            System.out.println("""
+                    Операция отменена. Выход из подпрограммы
+                    """);
+            return;
+        }
+        deleteUserByLogin(login);
     }
 }
