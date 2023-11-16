@@ -178,8 +178,13 @@ public class Menu {
         while(true) {
             int num = currentMenu.getNumSubmenus();
             if (num > 0) {
+                for (int i = 0; i < 80; i++) { System.out.print("-"); }
+                System.out.println("\n\n\nПункт меню \"" + currentMenu.getTitle().getValue() + "\"");
                 currentMenu.listSubmenus();
                 int res = getChoice(1, num);
+                System.out.println("\n\n");
+                for (int i = 0; i < 80; i++) { System.out.print("-"); }
+                System.out.println();
                 MenuItem selectedMenu = currentMenu.getSubmenus().get(res - 1);
                 if (selectedMenu.getTitle() == MenuTitle.BACK) {
                     currentMenu = enteredMenus.pop();

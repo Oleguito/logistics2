@@ -39,7 +39,7 @@ public class MenuItem {
     }
     
     public void listSubmenus () {
-        System.out.println();
+        // System.out.println();
         for (int i = 0; i < submenus.size(); i++) {
             System.out.printf("%d - %s\n", i + 1, submenus.get(i).getTitle().getValue());
         }

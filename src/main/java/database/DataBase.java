@@ -4,6 +4,7 @@ import entities.CargoProfile;
 import entities.User;
 import entities.UserFields;
 import enums.Role;
+import settings.Settings;
 import utils.FileUtils;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class DataBase implements database.interfaces.DataBase {
@@ -20,16 +22,28 @@ public class DataBase implements database.interfaces.DataBase {
     List<CargoProfile> cargoProfiles;
     
     public DataBase() {
-        this.users = getUsersFromDB();;
+        this.users = getUsersFromDB();
         this.cargoProfiles = getCargoProfilesFromDB();
     }
     
     public List <CargoProfile> getCargoProfiles() {
-        return cargoProfiles;
+        if(cargoProfiles != null) return cargoProfiles;
+        return getCargoProfilesFromDB();
     }
     
     private List <CargoProfile> getCargoProfilesFromDB() {
-        return null;
+        String filename = "object.dat";
+        if(!new File(Settings.filesDir + filename).exists()) return new ArrayList<CargoProfile>();
+        var res = FileUtils.deserialize(filename);
+        if(res == null) return new ArrayList<CargoProfile>();
+        return res;
+    }
+    
+    public Optional <User> getUserBy(UUID uuid) {
+        var resultUser = users.parallelStream()
+                                             .filter(u -> {return u.getFields().getUuid().equals(uuid);})
+                                             .findFirst();
+        return resultUser;
     }
     
     public List<User> getUsers() {
@@ -64,7 +78,7 @@ public class DataBase implements database.interfaces.DataBase {
         for (int i = 0; i < columns.length; i++) {
             contents.append(columns[i] + ";");
         }
-        File file = new File("src/main/resources/" + title + ".db");
+        File file = new File(Settings.filesDir + title + ".db");
         try {
             if(!file.exists()) {
                 FileWriter writer = new FileWriter(file);
@@ -77,5 +91,12 @@ public class DataBase implements database.interfaces.DataBase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public Optional<CargoProfile> getCargoProfileByUUID(UUID uuid) {
+        if(cargoProfiles == null) return Optional.ofNullable(null);
+        return cargoProfiles.parallelStream().filter(p -> {
+            return p.getUuid().equals(uuid);
+        }).findFirst();
     }
 }

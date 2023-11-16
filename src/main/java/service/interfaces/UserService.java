@@ -16,4 +16,8 @@ public interface UserService {
     public String getLogin();
     
     public String getPassword();
+    
+    public void deleteOtherUser();
+    
+    public boolean userYes();
 }

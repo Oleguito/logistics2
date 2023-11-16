@@ -35,6 +35,7 @@ public class AdminMenuItemsSet extends MenuItemsSet {
         
         deleteUserMenu = new MenuItem(MenuTitle.DELETE_USER, () -> {
             System.out.println("Админ удаляет пользователя...");
+            COP.us.deleteOtherUser();
         });
         
         /* Профиль — войденный */

@@ -5,6 +5,8 @@ import service.CargoService;
 import service.menu.MenuService;
 import service.UserService;
 
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 
 
@@ -27,6 +29,7 @@ public class COP {
     public static database.interfaces.DataBase db = new DataBase();
     public static service.interfaces.UserService us = new UserService();
     public static service.interfaces.CargoService cs = new CargoService();
-    public static MenuService ms = new MenuService();
-    public static Scanner scanner = new Scanner(System.in);
+    // public static MenuService ms = new MenuService();
+    public static Scanner scanner = new Scanner(
+            new InputStreamReader(System.in, Charset.forName("UTF-8")));
 }

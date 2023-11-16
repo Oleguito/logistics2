@@ -43,26 +43,21 @@ public class UserService implements service.interfaces.UserService {
         System.out.println("""
                 Меню удаления вашей учетной записи.
                 Имейте в виду что эта операция необратима
-                Введите "y" если хотите удалить свою учетную запись
                 """);
-        
-        char decision = (char) COP.scanner.nextInt();
-        if(decision == 'y' || decision == 'Y') {
-            User currentUser = authorizedUser;
-            var allUsers = COP.db.getUsers();
-            allUsers.remove(currentUser);
-            System.out.println("Ваша учетная запись удалена");
-            FileUtils.writeFile("users.db",
-                    UserMapper.convertListUsersToString(allUsers));
-            System.out.println("Изменения сохранены");
-        } else {
-            System.out.println("Выход из подпрограммы");
-        }
+        if(!userYes()) return;
+        User currentUser = authorizedUser;
+        var allUsers = COP.db.getUsers();
+        allUsers.remove(currentUser);
+        System.out.println("Ваша учетная запись удалена");
+        FileUtils.writeFile("users.db",
+                UserMapper.convertListUsersToString(allUsers));
+        System.out.println("Изменения сохранены");
     }
     
     @Override
     public void editUser() {
         System.out.println("Меню редактирования учетной записи");
+        if(!userYes()) return;
         var allUsers = COP.db.getUsers();
         allUsers.remove(authorizedUser);
         User createdUser = createUser();
@@ -142,7 +137,7 @@ public class UserService implements service.interfaces.UserService {
         return userInput;
     }
     
-    void deleteUserByLogin(String loginOfAccToDelete) {
+    public void deleteUserByLogin(String loginOfAccToDelete) {
         
         var foundUser = COP.db.getUsers().parallelStream()
                 .filter(u -> u.getFields().getLogin().equals(loginOfAccToDelete))
@@ -174,5 +169,17 @@ public class UserService implements service.interfaces.UserService {
             return;
         }
         deleteUserByLogin(login);
+    }
+    
+    public boolean userYes() {
+        boolean res = false;
+        System.out.println("Введите \"y\" для продолжения, что угодно для отмены");
+        var decision = COP.scanner.nextLine();
+        if(!decision.isEmpty() && !decision.isBlank() && decision.trim().toLowerCase().charAt(0) == 'y') {
+            return true;
+        } else {
+            System.out.println("Отмена операции");
+        }
+        return res;
     }
 }

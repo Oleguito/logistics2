@@ -1,8 +1,19 @@
 package application;
 
 // import interfaces.ServiceInterface;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.Random;
+import entities.CargoProfile;
+import service.CargoService;
 import service.menu.Menu;
 import enums.Role;
+import utils.FileUtils;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Main {
     
@@ -33,15 +44,76 @@ public class Main {
 
         // COP.init();
         
-        // COP.us.setAuthorizedUser(
-        //         COP.db.getUsers().stream()
-        //                          .filter(u -> u.getFields().getRole().equals(Role.GUEST))
-        //                          .findFirst().get()
-        // );
         
         // Menu.fillMenuAddressesHashMap();
         // Menu.setMenus();
         // Menu.menuAddresses.put(Menu.profileMenu, Menu.menuAddresses.get(Menu.nonEnteredProfileMenu));
+        
+        // String[] names = {"Базилио", "Петро", "Клаудио", "Миладе", "Олег"};
+        // Random random = new Random();
+        // var lcp = new ArrayList <CargoProfile>();
+        // var users = COP.db.getUsers();
+        // for (int i = 0; i < 5; i++) {
+        //     var author = users.get(random.nextInt(4)).getFields();
+        //     CargoProfile cp = CargoProfile.builder()
+        //         .uuid(UUID.randomUUID())
+        //         .authorUUID(author.getUuid())
+        //         .sender(names[random.nextInt(5)])
+        //         .receiver(names[random.nextInt(5)])
+        //         .cargoList(new ArrayList <>())
+        //         .build();
+        //    lcp.add(cp);
+        // }
+        
+        
+        // for(var i : Charset.availableCharsets().values()) {
+        //     System.out.println(i);
+        // }
+        
+
+        
+        // System.out.println("Введите строку на русском");
+        // var newin = new InputStreamReader(System.in, Charset.forName("windows-1251"));
+        // var scanner = new java.util.Scanner(newin);
+        // var b = scanner.nextLine();
+        // System.out.println("Вы ввели: " +  "\"" + b + "\"");
+        // FileUtils.serializeA(b, "test.set");
+        // var a = (String) FileUtils.deserializeA("test.set");
+        // System.out.println("десериализовано: " + "\"" + a + "\"");
+        
+        
+        
+        // FileUtils.serialize("object.dat", lcp);
+        // var res = FileUtils.deserialize("object.dat");
+        //
+        // for(var i : res) {
+        //     System.out.println(i.toDisplayString());
+        // }
+        
+        // return;
+        
+        COP.us.setAuthorizedUser(
+                COP.db.getUsers().stream()
+                                 .filter(u -> u.getFields().getRole().equals(Role.USER))
+                                 .findFirst().get()
+        );
+
+        
+        
+        // var list = COP.cs.listMyCargoProfiles();
+        
+        
+        // COP.cs.addCargo();
+        
+        // COP.cs.listMyCargoProfiles();
+        
+        
+        // res = FileUtils.deserialize("object.dat");
+        //
+        // for(var i : res) {
+        //     System.out.println(i.toDisplayString());
+        // }
+        
         Menu.run();
         
         
@@ -101,7 +173,7 @@ public class Main {
         // Menu.run();
         
         
-        // FileUtils.writeFile("src/main/resources/users.db", sb.toString());
+        
         
         // DataBase.getUsers();
         
@@ -116,3 +188,5 @@ public class Main {
     
     
 }
+
+

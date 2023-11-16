@@ -24,15 +24,15 @@ public class UserMenuItemsSet extends MenuItemsSet {
         deleteAccountMenu = new MenuItem(MenuTitle.DELETE_ACCOUNT, () -> {COP.us.deleteUser();});
         historyMenu = new MenuItem(MenuTitle.HISTORY, () -> {});
         cargosMenu = new MenuItem(MenuTitle.CARGOS, () -> {});
-        trackingMenu = new MenuItem(MenuTitle.TRACKING, () -> {});
-        createCargoProfileMenu = new MenuItem(MenuTitle.CREATE_CARGO_PROFILE, () -> {});
-        addEntryMenu = new MenuItem(MenuTitle.ADD_ENTRY, () -> {});
-        editEntryMenu = new MenuItem(MenuTitle.EDIT_ENTRY, () -> {});
-        deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {});
-        editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {});
-        deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {});
+        trackingMenu = new MenuItem(MenuTitle.TRACKING, () -> {COP.cs.listMyCargoProfiles();});
+        createCargoProfileMenu = new MenuItem(MenuTitle.CREATE_CARGO_PROFILE, () -> {COP.cs.addCargoProfile();});
+        addEntryMenu = new MenuItem(MenuTitle.ADD_ENTRY, () -> {COP.cs.addCargo();});
+        editEntryMenu = new MenuItem(MenuTitle.EDIT_ENTRY, () -> {COP.cs.editCargo();});
+        deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {COP.cs.deleteCargo();});
+        editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {COP.cs.editCargoProfile();});
+        deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {COP.cs.deleteCargoProfile();});
         
-        /* Профиль — войденный */
+        /* Профиль — войденный как USER */
         profileMenu = new MenuItem(MenuTitle.PROFILE, () -> {});
         profileMenu.addSubMenu(editAccountMenu);
         profileMenu.addSubMenu(deleteAccountMenu);
@@ -57,6 +57,12 @@ public class UserMenuItemsSet extends MenuItemsSet {
         createCargoProfileMenu.addSubMenu(homeMenu);
         createCargoProfileMenu.addSubMenu(backMenu);
         
+        /* Изменить профиль груза */
+        editCargoProfileMenu.addSubMenu(addEntryMenu);
+        editCargoProfileMenu.addSubMenu(editEntryMenu);
+        editCargoProfileMenu.addSubMenu(deleteEntryMenu);
+        editCargoProfileMenu.addSubMenu(homeMenu);
+        editCargoProfileMenu.addSubMenu(backMenu);
         
         /* Главное меню */
         mainMenu.addSubMenu(profileMenu);
