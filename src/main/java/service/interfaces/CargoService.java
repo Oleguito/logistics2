@@ -23,4 +23,10 @@ public interface CargoService {
     public void findCargoProfile();
     
     public void listMyCargoProfiles();
+    
+    public void setDeliveryStatusMenu();
+    
+    public void displayHistory();
+    
+    public void selectCargoProfile();
 }

@@ -21,7 +21,7 @@ public class Encrypt {
     }
     
 
-    private static String decryptString(String string) {
+    public static String decryptString(String string) {
         char[] contentsArray = string.toCharArray();
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < contentsArray.length; i++) {
@@ -30,7 +30,7 @@ public class Encrypt {
         return result.toString();
     }
     
-    private static String encryptString(String string) {
+    public static String encryptString(String string) {
         char[] contentsArray = string.toCharArray();
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < contentsArray.length; i++) {

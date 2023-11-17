@@ -1,6 +1,7 @@
 package entities;
 
 import application.COP;
+import enums.DeliveryStatus;
 import lombok.Builder;
 import lombok.Getter;
 import utils.StringUtils;
@@ -18,8 +19,13 @@ public class CargoProfile implements Serializable {
     UUID authorUUID;
     String sender;
     String receiver;
+    DeliveryStatus deliveryStatus;
     
-    List <Cargo> cargoList;
+    private List <Cargo> cargoList;
+    
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
+    }
     
     public String toDisplayString() {
         
@@ -27,19 +33,23 @@ public class CargoProfile implements Serializable {
         for(var i : cargoList) {
             sb.append("\t" + i.toDisplayString());
         }
-        return "Профиль груза ID: " + StringUtils.fitToWidth(uuid.toString(), 50)
-                + title + "\n"
+        return "Профиль груза ID: " + uuid.toString() + "(" + deliveryStatus.getValue() + ")" + "\n"
+                + "Название: " + "\"" + title + "\"" + "\n"
                 // + "Автор ID: " + StringUtils.fitToWidth(authorUUID.toString(), 50) + "\n"
-                + "Автор login: " + COP.db.getUserBy(authorUUID).orElseThrow().getFields().getLogin() + "\n"
-                + "Отправитель: " + StringUtils.fitToWidth(sender, 30) + "\n"
-                + "Получатель: " + StringUtils.fitToWidth(receiver, 30) + "\n"
+                + "Логин автора: " + COP.db.getUserBy(authorUUID).orElseThrow().getFields().getLogin() + "\n"
+                + "Отправитель: " + sender  + "\n"
+                + "Получатель: " + receiver  + "\n"
+                + "СТАТУС: " + deliveryStatus.getValue() + "\n"
                 + "\tГрузы: " + "\n"
                 + (sb.isEmpty() ? "\t(Нет)" : sb.toString());
     }
     
     public String toShortDisplayString() {
         
-        return "Профиль груза ID: " + uuid.toString() + " " + title + "\n";
+        return "Профиль груза ID: "
+                + uuid.toString() + " "
+                + title
+                + "(" + deliveryStatus.getValue() + ")" + "\n";
     }
     
     public void addCargo(Cargo cargo) {

@@ -2,27 +2,31 @@ package service.menu;
 
 import application.COP;
 import enums.MenuTitle;
+import utils.FileUtils;
 
 public class UserMenuItemsSet extends MenuItemsSet {
     
-    public MenuItem editAccountMenu          ;
-    public MenuItem deleteAccountMenu        ;
-    public MenuItem historyMenu              ;
-    public MenuItem cargosMenu               ;
-    public MenuItem trackingMenu             ;
-    public MenuItem createCargoProfileMenu   ;
-    public MenuItem addEntryMenu             ;
-    public MenuItem editEntryMenu            ;
-    public MenuItem deleteEntryMenu          ;
-    public MenuItem editCargoProfileMenu     ;
-    public MenuItem deleteCargoProfileMenu   ;
+    public MenuItem editAccountMenu;
+    public MenuItem deleteAccountMenu;
+    public MenuItem historyMenu;
+    public MenuItem cargosMenu;
+    public MenuItem trackingMenu;
+    public MenuItem createCargoProfileMenu;
+    public MenuItem addEntryMenu;
+    public MenuItem editEntryMenu;
+    public MenuItem deleteEntryMenu;
+    public MenuItem editCargoProfileMenu;
+    public MenuItem deleteCargoProfileMenu;
+    public MenuItem viewFileStructureMenu;
+    public MenuItem markDeliveryStatusMenu;
+    public MenuItem selectCargoProfileMenu;
     
     public UserMenuItemsSet() {
         super();
         
         editAccountMenu = new MenuItem(MenuTitle.EDIT_ACCOUNT, () -> {COP.us.editUser();});
         deleteAccountMenu = new MenuItem(MenuTitle.DELETE_ACCOUNT, () -> {COP.us.deleteUser();});
-        historyMenu = new MenuItem(MenuTitle.HISTORY, () -> {});
+        historyMenu = new MenuItem(MenuTitle.HISTORY, () -> {COP.cs.displayHistory();});
         cargosMenu = new MenuItem(MenuTitle.CARGOS, () -> {});
         trackingMenu = new MenuItem(MenuTitle.TRACKING, () -> {COP.cs.listMyCargoProfiles();});
         createCargoProfileMenu = new MenuItem(MenuTitle.CREATE_CARGO_PROFILE, () -> {COP.cs.addCargoProfile();});
@@ -31,9 +35,13 @@ public class UserMenuItemsSet extends MenuItemsSet {
         deleteEntryMenu = new MenuItem(MenuTitle.DELETE_ENTRY, () -> {COP.cs.deleteCargo();});
         editCargoProfileMenu = new MenuItem(MenuTitle.EDIT_CARGO_PROFILE, () -> {COP.cs.editCargoProfile();});
         deleteCargoProfileMenu = new MenuItem(MenuTitle.DELETE_CARGO_PROFILE, () -> {COP.cs.deleteCargoProfile();});
+        viewFileStructureMenu = new MenuItem(MenuTitle.VIEW_FILE_STRUCTURE, () -> {FileUtils.listDirs();});
+        markDeliveryStatusMenu = new MenuItem(MenuTitle.MARK_DELIVERY_STATUS, () -> {COP.cs.setDeliveryStatusMenu();});
+        selectCargoProfileMenu = new MenuItem(MenuTitle.SELECT_CARGO_PROFILE, () -> {COP.cs.selectCargoProfile();});
         
         /* Профиль — войденный как USER */
         profileMenu = new MenuItem(MenuTitle.PROFILE, () -> {});
+        profileMenu.addSubMenu(viewFileStructureMenu);
         profileMenu.addSubMenu(editAccountMenu);
         profileMenu.addSubMenu(deleteAccountMenu);
         profileMenu.addSubMenu(cargosMenu);
@@ -44,6 +52,7 @@ public class UserMenuItemsSet extends MenuItemsSet {
         
         /* Грузы */
         cargosMenu.addSubMenu(trackingMenu);
+        cargosMenu.addSubMenu(markDeliveryStatusMenu);
         cargosMenu.addSubMenu(createCargoProfileMenu);
         cargosMenu.addSubMenu(editCargoProfileMenu);
         cargosMenu.addSubMenu(deleteCargoProfileMenu);

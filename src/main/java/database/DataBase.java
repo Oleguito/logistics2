@@ -51,10 +51,11 @@ public class DataBase implements database.interfaces.DataBase {
     }
     
     private List <User> getUsersFromDB () {
-        String fileContents = FileUtils.readFile("users.db");
+        String fileContents = FileUtils.readEncryptedFile("users.db");
         List<User> res = new ArrayList <>();
         String[] splitByLine = fileContents.split("\n");
         int needItemsInLine = UserFields.class.getDeclaredFields().length;
+        
         for(var line : splitByLine) {
             String[] split = line.split(";");
             if(split.length != needItemsInLine) {

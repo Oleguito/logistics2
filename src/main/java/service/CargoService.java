@@ -3,6 +3,7 @@ package service;
 import application.COP;
 import entities.Cargo;
 import entities.CargoProfile;
+import enums.DeliveryStatus;
 import utils.FileUtils;
 import utils.IntUtils;
 
@@ -21,7 +22,7 @@ public class CargoService implements service.interfaces.CargoService {
         return selectedCargoProfile;
     }
     
-    void selectCargoService() {
+    public void selectCargoProfile() {
         var myCargoProfiles = COP.db.getCargoProfiles()
                 .parallelStream()
                 .filter(cp -> {
@@ -127,6 +128,7 @@ public class CargoService implements service.interfaces.CargoService {
                 .authorUUID(COP.us.getAuthorizedUser().getFields().getUuid())
                 .uuid(UUID.randomUUID())
                 .cargoList(new ArrayList <>())
+                .deliveryStatus(DeliveryStatus.DELIVERY_PENDING)
                 .build();
     }
     
@@ -205,7 +207,7 @@ public class CargoService implements service.interfaces.CargoService {
                     Вы хотите выбрать профиль груза?
                     """);
             if(!COP.us.userYes()) return;
-            selectCargoService();
+            selectCargoProfile();
         }
         System.out.println("Выделенный профиль груза:");
         System.out.println(selectedCargoProfile.toDisplayString());
@@ -289,7 +291,7 @@ public class CargoService implements service.interfaces.CargoService {
     
     
     public void listMyCargoProfiles() {
-        System.out.println("Отслеживание грузов...");
+        System.out.println("Отслеживание профилей грузов...");
         var thisUser = COP.us.getAuthorizedUser();
         if(thisUser == null) {
             System.out.println("Пользователь пока не вошел");
@@ -310,5 +312,44 @@ public class CargoService implements service.interfaces.CargoService {
         for(var i : myCargoProfiles) {
             System.out.println(i.toDisplayString());
         }
+    }
+    
+    public void setDeliveryStatusMenu () {
+        System.out.println("Меню установления статуса профиля грузов");
+        if(!COP.us.userYes()) return;
+        makeSureCargoProfileSelected();
+        var vals = DeliveryStatus.values();
+        for (int i = 0; i < vals.length; i++) {
+            System.out.printf("%d - %s", i + 1, vals[i].getValue());
+        }
+        System.out.println("""
+                Введите номер статуса, который требуется задать
+        """);
+        int res = IntUtils.getChoice(1, vals.length);
+        setDeliveryStatus(res - 1);
+        System.out.println("Все пучком, все сделано");
+        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
+        System.out.println("Изменения сохранены");
+    }
+    
+    private void setDeliveryStatus(int index) {
+        selectedCargoProfile.setDeliveryStatus(DeliveryStatus.values()[index]);
+    }
+    
+    public void displayHistory() {
+        System.out.println("Меню отображения перечня профилей грузов со статусом " + "\"" +
+                DeliveryStatus.DELIVERED.getValue() + "\"" + "\n");
+        // if(!COP.us.userYes()) return;
+        System.out.println("""
+                Ниже перечислены завершенные передачи
+        """);
+        COP.db.getCargoProfiles().parallelStream()
+                .filter(cp -> {
+                    return cp.getAuthorUUID().equals(COP.us.getAuthorizedUser().getFields().getUuid())
+                            && cp.getDeliveryStatus().equals(DeliveryStatus.DELIVERED);
+                })
+                .forEach(i -> {
+                    System.out.printf("%s\n", i.toDisplayString());
+                });
     }
 }

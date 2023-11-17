@@ -1,14 +1,19 @@
 package application;
 
 // import interfaces.ServiceInterface;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Random;
 import entities.CargoProfile;
+import enums.DeliveryStatus;
 import service.CargoService;
+import service.Encrypt;
 import service.menu.Menu;
 import enums.Role;
+import settings.Settings;
 import utils.FileUtils;
 
 import java.util.List;
@@ -92,12 +97,8 @@ public class Main {
         
         // return;
         
-        COP.us.setAuthorizedUser(
-                COP.db.getUsers().stream()
-                                 .filter(u -> u.getFields().getRole().equals(Role.USER))
-                                 .findFirst().get()
-        );
-
+        
+        // FileUtils.listDirs();
         
         
         // var list = COP.cs.listMyCargoProfiles();
@@ -107,6 +108,27 @@ public class Main {
         
         // COP.cs.listMyCargoProfiles();
         
+        // try {
+        //     var file = new File(Settings.filesDir + "users.db");
+        //     // var r = new InputStreamReader(new FileInputStream());
+        //
+        // } catch (Exception e) {
+        //     e.getMessage();
+        // }
+        
+        Encrypt.decryptFile("users.db");
+        
+        // var a = FileUtils.readEncryptedFile("users.db");
+        // System.out.println("");
+        
+        // COP.us.setAuthorizedUser(
+        //         COP.db.getUsers().stream()
+        //                          .filter(u -> u.getFields().getRole().equals(Role.ADMIN))
+        //                          .findFirst().get()
+        // );
+        //
+        // Menu.run();
+        
         
         // res = FileUtils.deserialize("object.dat");
         //
@@ -114,7 +136,9 @@ public class Main {
         //     System.out.println(i.toDisplayString());
         // }
         
-        Menu.run();
+       
+        
+        
         
         
         

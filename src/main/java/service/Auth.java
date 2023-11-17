@@ -25,7 +25,7 @@ public class Auth {
         // COP.us.setAuthorizedUser(foundUser.get());
         
         
-        COP.us.setAuthorizedUser(COP.db.getUsers().get(0));
+        // COP.us.setAuthorizedUser(COP.db.getUsers().get(0));
         System.out.println("Поздравляем! Вы успешно авторизовались!");
         System.out.println("Ваше имя-отчество: " + COP.us.getAuthorizedUser().getFields().getFullName());
         System.out.println("Ваш логин: " + COP.us.getAuthorizedUser().getFields().getLogin());

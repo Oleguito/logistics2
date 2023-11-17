@@ -20,4 +20,5 @@ public interface UserService {
     public void deleteOtherUser();
     
     public boolean userYes();
+    
 }
