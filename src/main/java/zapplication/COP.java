@@ -1,8 +1,7 @@
-package application;
+package zapplication;
 
 import database.DataBase;
 import service.CargoService;
-import service.menu.MenuService;
 import service.UserService;
 
 import java.io.InputStreamReader;
@@ -30,6 +29,5 @@ public class COP {
     public static service.interfaces.UserService us = new UserService();
     public static service.interfaces.CargoService cs = new CargoService();
     // public static MenuService ms = new MenuService();
-    public static Scanner scanner = new Scanner(
-            new InputStreamReader(System.in, Charset.forName("UTF-8")));
+    public static Scanner scanner = new Scanner(System.in);
 }

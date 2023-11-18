@@ -1,6 +1,6 @@
 package service;
 
-import application.COP;
+import zapplication.COP;
 import entities.Cargo;
 import entities.CargoProfile;
 import enums.DeliveryStatus;
@@ -97,9 +97,15 @@ public class CargoService implements service.interfaces.CargoService {
         
         selectedCargoProfile.addCargo(createCargo());
         System.out.println("Груз успешно добавлен в выбранный профиль грузов");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
+        saveData();
+    }
+    
+    private void saveData() {
+        var filename = "object.dat";
+        Encrypt.decryptFile(filename);
+        FileUtils.serialize(filename, COP.db.getCargoProfiles());
+        Encrypt.encryptFile(filename);
         System.out.println("Изменения сохранены");
-        
     }
     
     CargoProfile createCargoProfile() {
@@ -128,7 +134,7 @@ public class CargoService implements service.interfaces.CargoService {
                 .authorUUID(COP.us.getAuthorizedUser().getFields().getUuid())
                 .uuid(UUID.randomUUID())
                 .cargoList(new ArrayList <>())
-                .deliveryStatus(DeliveryStatus.DELIVERY_PENDING)
+                .deliveryStatus(DeliveryStatus.IN_ASSEMBLY)
                 .build();
     }
     
@@ -143,8 +149,7 @@ public class CargoService implements service.interfaces.CargoService {
         var created = createCargoProfile();
         COP.db.getCargoProfiles().add(created);
         System.out.println("Профиль грузов добавлен");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
-        System.out.println("Изменения сохранены");
+        saveData();
         
         System.out.println("Желаете выделить профиль груза для дальнейшей работы?");
         if(!COP.us.userYes()) return;
@@ -183,8 +188,7 @@ public class CargoService implements service.interfaces.CargoService {
         
         selectedCargoProfile.getCargoList().set(res - 1, createCargo());
         System.out.println("Груз успешно изменен");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
-        System.out.println("Изменения сохранены");
+        saveData();
         
     }
     
@@ -237,8 +241,7 @@ public class CargoService implements service.interfaces.CargoService {
         
         selectedCargoProfile.getCargoList().remove(res - 1);
         System.out.println("Груз удален из выбранного профиля");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
-        System.out.println("Изменения сохранены");
+        saveData();
     }
     
     @Override
@@ -254,8 +257,7 @@ public class CargoService implements service.interfaces.CargoService {
         
         COP.db.getCargoProfiles().remove(selectedCargoProfile);
         System.out.println("Профиль грузов удален");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
-        System.out.println("Изменения сохранены");
+        saveData();
         
     }
     
@@ -328,8 +330,7 @@ public class CargoService implements service.interfaces.CargoService {
         int res = IntUtils.getChoice(1, vals.length);
         setDeliveryStatus(res - 1);
         System.out.println("Все пучком, все сделано");
-        FileUtils.serialize("object.dat", COP.db.getCargoProfiles());
-        System.out.println("Изменения сохранены");
+        saveData();
     }
     
     private void setDeliveryStatus(int index) {

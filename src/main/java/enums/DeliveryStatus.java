@@ -1,6 +1,7 @@
 package enums;
 
 public enum DeliveryStatus {
+    IN_ASSEMBLY("В сборке"),
     DELIVERED("Доставлено"),
     DELIVERY_PENDING("Доставляется");
     

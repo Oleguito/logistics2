@@ -1,13 +1,11 @@
 package entities;
 
-import application.COP;
+import zapplication.COP;
 import enums.DeliveryStatus;
 import lombok.Builder;
 import lombok.Getter;
-import utils.StringUtils;
 
 import java.io.Serializable;
-import java.text.MessageFormat;
 import java.util.List;
 import java.util.UUID;
 

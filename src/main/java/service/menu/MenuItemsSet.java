@@ -1,6 +1,6 @@
 package service.menu;
 
-import application.COP;
+import zapplication.COP;
 import enums.MenuTitle;
 import service.Auth;
 

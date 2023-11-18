@@ -28,7 +28,6 @@ public class UserMapper {
         for(var i : users) {
             sb.append(i.toDBstring());
         }
-        sb.append("\n");
         return sb.toString();
     }
 }

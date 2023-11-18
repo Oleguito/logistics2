@@ -1,24 +1,8 @@
-package application;
+package zapplication;
 
 // import interfaces.ServiceInterface;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.Random;
-import entities.CargoProfile;
-import enums.DeliveryStatus;
-import service.CargoService;
 import service.Encrypt;
 import service.menu.Menu;
-import enums.Role;
-import settings.Settings;
-import utils.FileUtils;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.UUID;
 
 public class Main {
     
@@ -116,7 +100,40 @@ public class Main {
         //     e.getMessage();
         // }
         
-        Encrypt.decryptFile("users.db");
+        // String fname = "users.db";
+        String fname = "object.dat";
+        // Encrypt.encryptFile(fname);
+        // Encrypt.decryptFile(fname);
+        System.out.println("");
+        // var a = FileUtils.readEncryptedTextFile(fname);
+        // FileUtils.writeEncryptTextFile(fname, a);
+        // byte what = (byte) -64;
+        // byte encoded = Encrypt.rightRotateOnce(what);
+        // byte decoded = Encrypt.leftRotateOnce(encoded);
+        // System.out.println("what: " + what);
+        // System.out.println("encoded: " + encoded);
+        // System.out.println("decoded: " + decoded);
+        
+        // for (byte i = -128; i < 127; i++) {
+        //     byte what = i;
+        //     byte encoded = Encrypt.rightRotateOnce(what);
+        //     byte decoded = Encrypt.leftRotateOnce(encoded);
+        //     if(decoded != what ) {
+        //         System.out.printf("%d %d %d\n", i, encoded, decoded);
+        //     }
+        // }
+        
+        Menu.run();
+        
+        // try {
+        //     Files.write(new java.io.File("boo.txt").toPath(),
+        //     new byte[]{65,13,10},
+        //     StandardOpenOption.WRITE,
+        //     StandardOpenOption.CREATE);
+        // } catch (Exception e) {
+        //     e.getMessage();
+        //
+        // }
         
         // var a = FileUtils.readEncryptedFile("users.db");
         // System.out.println("");
@@ -126,8 +143,7 @@ public class Main {
         //                          .filter(u -> u.getFields().getRole().equals(Role.ADMIN))
         //                          .findFirst().get()
         // );
-        //
-        // Menu.run();
+
         
         
         // res = FileUtils.deserialize("object.dat");

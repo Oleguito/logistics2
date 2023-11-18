@@ -4,13 +4,14 @@ import entities.CargoProfile;
 import entities.User;
 import entities.UserFields;
 import enums.Role;
+import service.Encrypt;
 import settings.Settings;
 import utils.FileUtils;
+import zapplication.COP;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,16 @@ public class DataBase implements database.interfaces.DataBase {
     
     private List <CargoProfile> getCargoProfilesFromDB() {
         String filename = "object.dat";
-        if(!new File(Settings.filesDir + filename).exists()) return new ArrayList<CargoProfile>();
+        if(!new File(Settings.filesDir + filename).exists()) {
+            var res = new ArrayList<CargoProfile>();
+            FileUtils.serialize(filename, res);
+            Encrypt.encryptFile(filename);
+            return res;
+        }
+        Encrypt.decryptFile(filename);
         var res = FileUtils.deserialize(filename);
+        Encrypt.encryptFile(filename);
+        // System.err.println("Профили грузов прочитаны");
         if(res == null) return new ArrayList<CargoProfile>();
         return res;
     }
@@ -51,7 +60,10 @@ public class DataBase implements database.interfaces.DataBase {
     }
     
     private List <User> getUsersFromDB () {
-        String fileContents = FileUtils.readEncryptedFile("users.db");
+        String filename = "users.db";
+        Encrypt.decryptFile(filename);
+        String fileContents = FileUtils.readTextFile(filename);
+        Encrypt.encryptFile(filename);
         List<User> res = new ArrayList <>();
         String[] splitByLine = fileContents.split("\n");
         int needItemsInLine = UserFields.class.getDeclaredFields().length;

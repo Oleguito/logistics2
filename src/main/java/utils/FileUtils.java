@@ -5,14 +5,13 @@ import service.Encrypt;
 import settings.Settings;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
 public class FileUtils {
     
-    public static String readEncryptedFile(String filename) {
+    public static String readEncryptedTextFile(String filename) {
         String result = "";
         var file = new java.io.File(Settings.filesDir + filename);
         try {
@@ -23,7 +22,7 @@ public class FileUtils {
         return Encrypt.decryptString(result);
     }
     
-    public static String readFile(String filename) {
+    public static String readTextFile(String filename) {
         StringBuffer contents = new StringBuffer();
         String line;
         FileReader fr;
@@ -42,11 +41,22 @@ public class FileUtils {
     }
     
    
-    public static void writeFile (String filename, String text) {
+    public static void writeTextFile(String filename, String text) {
         FileWriter writer;
         try {
             writer = new FileWriter(Settings.filesDir + filename);
             writer.write(text);
+            writer.close();
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+    
+    public static void writeEncryptTextFile(String filename, String text) {
+        FileWriter writer;
+        try {
+            writer = new FileWriter(Settings.filesDir + filename);
+            writer.write(Encrypt.encryptString(text));
             writer.close();
         } catch (Exception e) {
             e.getMessage();

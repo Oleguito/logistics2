@@ -2,13 +2,15 @@ package service;
 
 import entities.User;
 import entities.UserFields;
+import enums.Role;
 import mappers.UserMapper;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import settings.Settings;
-import application.COP;
+import zapplication.COP;
 import utils.FileUtils;
 
+import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -49,8 +51,7 @@ public class UserService implements service.interfaces.UserService {
         var allUsers = COP.db.getUsers();
         allUsers.remove(currentUser);
         System.out.println("Ваша учетная запись удалена");
-        FileUtils.writeFile("users.db",
-                UserMapper.convertListUsersToString(allUsers));
+        saveUserData(allUsers);
         System.out.println("Изменения сохранены");
     }
     
@@ -63,7 +64,7 @@ public class UserService implements service.interfaces.UserService {
         User createdUser = createUser();
         System.out.println("Поздравляем! Ваша учетная запись успешно изменена!");
         allUsers.add(createdUser);
-        FileUtils.writeFile("users.db", UserMapper.convertListUsersToString(COP.db.getUsers()));
+        saveUserData(allUsers);
         System.out.println("Изменения сохранены");
     }
     
@@ -77,8 +78,16 @@ public class UserService implements service.interfaces.UserService {
         }
         System.out.println("Поздравляем! Ваша учетная запись успешно создана!");
         allUsers.add(createdUser);
-        FileUtils.writeFile("users.db", UserMapper.convertListUsersToString(COP.db.getUsers()));
+        saveUserData(allUsers);
         System.out.println("Изменения сохранены");
+    }
+    
+    private static void saveUserData(List <User> allUsers) {
+        String filename = "users.db";
+        Encrypt.decryptFile(filename);
+        FileUtils.writeTextFile(filename,
+                UserMapper.convertListUsersToString(allUsers));
+        Encrypt.encryptFile(filename);
     }
     
     public User createUser(){
@@ -88,11 +97,15 @@ public class UserService implements service.interfaces.UserService {
         String passwordHash = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, Settings.userSecret)
                 .hmacHex(password);
         
+        var thisrole = COP.us.getAuthorizedUser().getFields().getRole();
+        if(thisrole.equals(Role.GUEST)) thisrole = Role.USER;
+        
         return new User(UserFields.builder()
                 .uuid(UUID.randomUUID())
                 .fullName(FIO)
                 .login(login)
                 .passwordHash(passwordHash)
+                .role(COP.us.getAuthorizedUser().getFields().getRole())
                 .build());
     }
     
@@ -148,7 +161,7 @@ public class UserService implements service.interfaces.UserService {
         }
         COP.db.getUsers().remove(foundUser.get());
         System.out.println("Учетная запись удалена");
-        FileUtils.writeFile("users.db", UserMapper.convertListUsersToString(COP.db.getUsers()));
+        saveUserData(COP.db.getUsers());
         System.out.println("Изменения сохранены");
     }
     

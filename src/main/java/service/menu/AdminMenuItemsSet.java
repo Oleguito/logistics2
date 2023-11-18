@@ -1,6 +1,6 @@
 package service.menu;
 
-import application.COP;
+import zapplication.COP;
 import enums.MenuTitle;
 
 public class AdminMenuItemsSet extends UserMenuItemsSet {
@@ -30,7 +30,7 @@ public class AdminMenuItemsSet extends UserMenuItemsSet {
         mainMenu = new MenuItem(MenuTitle.MAIN, () -> {});
         mainMenu.addSubMenu(profileMenu);
         mainMenu.addSubMenu(super.addUserMenu);
-        profileMenu.addSubMenu(deleteUserMenu);
+        mainMenu.addSubMenu(deleteUserMenu);
         mainMenu.addSubMenu(super.exitMenu);
     }
 }

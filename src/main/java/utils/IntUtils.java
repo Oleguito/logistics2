@@ -1,6 +1,6 @@
 package utils;
 
-import application.COP;
+import zapplication.COP;
 
 public class IntUtils {
     public static int getChoice(int low, int high) {
